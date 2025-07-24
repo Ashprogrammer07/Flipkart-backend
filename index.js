@@ -12,11 +12,21 @@ const { router: authRoutes, authenticateJWT } = require("./auth");
 const cartRoutes = require("./cart");
 app.use(authRoutes);
 app.use(cartRoutes);
-
-mongoose.connect(
-  "mongodb+srv://anshulojha1214:fY8vsuBKjs9Z1Bs4@cluster0.e0a7mlr.mongodb.net/ecommerce",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+const connectDb = async () => {
+  try {
+    const c = await mongoose.connect(
+      "mongodb+srv://ashprogrammer01:KmjIoTzhNOhWSC2M@flipkart-clone.g2gjphq.mongodb.net/?retryWrites=true&w=majority&appName=Flipkart-clone",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+    console.log("Database connected successfully!!!");
+  } catch (err) {
+    console.error("Database connection failed:", err.message);
+  }
+};
+connectDb();
 
 const productSchema = new mongoose.Schema({ name: String, price: Number });
 const Product = mongoose.model("Product", productSchema);
